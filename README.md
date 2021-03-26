@@ -15,5 +15,9 @@ server-3 ansible_host=server3.example.com ansible_user=root
 You have to set the enviroment variabel `HETZNER_CLOUD_API_KEY` with your [Hetzner API token](https://docs.hetzner.cloud/#getting-started).
 
 ```sh
+# Build
+make
 
+# Run
+HETZNER_CLOUD_API_KEY=ABCDE1337 ./hcloud-ansible-inventory --inventory-file my-inventory.yaml
 ```
