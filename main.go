@@ -12,8 +12,9 @@ import (
 
 func showHelp() {
 	fmt.Println(`Usage:
-    ansible-hcloud-inventory [option]
-	--inventory-file [path to file]`)
+ansible-hcloud-inventory [option]
+	--inventory-file [path to file]
+	--add-user [name]`)
 
 	os.Exit(1)
 }
@@ -47,10 +48,17 @@ func main() {
 	}
 
 	pathToWriteInventory := args[2]
+	var ansibleUser string
 
 	if len(pathToWriteInventory) == 0 {
-		log.Fatal("Please set a path to write the inventor")
+		log.Fatal("Please set a path to write the inventory")
 		os.Exit(1)
+	}
+
+	if len(args) > 3 {
+		ansibleUser = args[4]
+	} else {
+		ansibleUser = "root"
 	}
 
 	client := hcloud.NewClient(hcloud.WithToken(authToken))
@@ -70,7 +78,7 @@ func main() {
 	checkForError(err)
 
 	for _, server := range servers {
-		hostEntry := fmt.Sprintf("%s ansible_host=%s ansible_user=root \n", server.Name, server.PublicNet.IPv4.DNSPtr)
+		hostEntry := fmt.Sprintf("%s ansible_host=%s ansible_user=%s\n", server.Name, server.PublicNet.IPv4.DNSPtr, ansibleUser)
 
 		_, err := f.WriteString(hostEntry)
 		checkForError(err)
