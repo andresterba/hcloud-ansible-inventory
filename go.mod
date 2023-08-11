@@ -2,7 +2,7 @@ module github.com/andresterba/hcloud-ansible-inventory
 
 go 1.20
 
-require github.com/hetznercloud/hcloud-go v1.48.0
+require github.com/hetznercloud/hcloud-go v1.49.0
 
 require (
 	github.com/beorn7/perks v1.0.1 // indirect
